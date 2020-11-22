@@ -1,0 +1,60 @@
+﻿@model List<SpScriptGenrator.ViewModels.SPNames>
+@{
+    ViewBag.Title = "GetAllSP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section headscriptandcss
+{
+    <link rel="stylesheet" href="~/Content/assets/vendor/libs/datatables/datatables.css">
+}
+
+
+@section footerscripts
+{
+    <script src="~/Content/assets/vendor/libs/datatables/datatables.js"></script>
+    <script>
+        $(function () {
+            $('.datatables-demo').dataTable();
+        });
+    </script>
+}
+<div class="container-fluid flex-grow-1 container-p-y">
+
+    <h4 class="font-weight-bold py-3 mb-4">
+        All Store Procedure
+    </h4>
+
+    <div class="card">
+        <h6 class="card-header">
+            Store Procedures
+        </h6>
+        <div class="card-datatable table-responsive">
+            <table class="datatables-demo table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Created Date</th>
+                        <th>Modified Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var spItem in Model)
+                        {
+                            <tr class="odd gradeX">
+                                <td>@spItem.SPName</td>
+                                <td>@spItem.Create_Date</td>
+                                <td>@spItem.Modify_Date</td>
+                            </tr>
+                        }
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

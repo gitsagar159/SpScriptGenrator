@@ -1,0 +1,134 @@
+﻿@model List<SpScriptGenrator.ViewModels.SPNames>
+@{
+    ViewBag.Title = "GetSPBetweenDates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string strTodayDate = !string.IsNullOrEmpty((string)ViewBag.ToDate) ? (string)ViewBag.ToDate : DateTime.Now.ToString("dd'/'MM'/'yyyy");
+    string strFromDate = !string.IsNullOrEmpty((string)ViewBag.FromDate) ? (string)ViewBag.FromDate : "";
+}
+@section headscriptandcss
+{
+    <link rel="stylesheet" href="~/Content/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/Content/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css">
+    <link rel="stylesheet" href="~/Content/assets/vendor/libs/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="~/Content/assets/vendor/libs/timepicker/timepicker.css">
+    <link rel="stylesheet" href="~/Content/assets/vendor/libs/datatables/datatables.css">
+}
+
+
+@section footerscripts
+{
+    <script src="~/Content/assets/vendor/libs/moment/moment.js"></script>
+    <script src="~/Content/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Content/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="~/Content/assets/vendor/libs/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.js"></script>
+    <script src="~/Content/assets/vendor/libs/timepicker/timepicker.js"></script>
+    <script src="~/Content/assets/js/forms_pickers.js"></script>
+
+    <script src="~/Content/assets/vendor/libs/datatables/datatables.js"></script>
+    <script>
+        $(function() {
+            $('.datatables-demo').dataTable();
+        });
+
+    // Bootstrap Material DateTimePicker
+    $(function () {
+        $('.b-date-picker').bootstrapMaterialDatePicker({
+            weekStart: 1,
+            time: false,
+            clearButton: true,
+            format: "DD/MM/YYYY",
+            maxDate: new Date()
+
+        });
+
+        $('#b-m-dtp-time').bootstrapMaterialDatePicker({
+            date: false,
+            shortTime: false,
+            format: 'HH:mm'
+        });
+
+        $('#b-m-dtp-datetime').bootstrapMaterialDatePicker({
+            weekStart: 1,
+            format: 'dddd DD MMMM YYYY - HH:mm',
+            shortTime: true,
+            nowButton: true,
+            minDate: new Date()
+        });
+    });
+    </script>
+}
+<div class="container-fluid flex-grow-1 container-p-y">
+
+    <h4 class="font-weight-bold py-3 mb-4">
+        Procedure Between Dates
+    </h4>
+
+    <div class="card mb-4">
+        <h6 class="card-header">
+            Date Filter (Modified Date)
+        </h6>
+        <div class="card-body demo-vertical-spacing">
+            @using (Html.BeginForm("GetSPBetweenDates","Home", FormMethod.Post, new { @id="frmGetselectedSP"}))
+            { 
+            <div class="row">
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">From Date</label>
+                        <input type="text" id="fromdate" name="fromdate" class="form-control b-date-picker" required value="@strFromDate" placeholder="Date">
+                    </div>
+                </div>
+                <div class="col col-md-4">
+                    <div class="form-group">
+                        <label class="form-label">To Date</label>
+                        <input type="text" id="todate" name="todate" class="form-control b-date-picker" required value="@strTodayDate" placeholder="Date">
+                    </div>
+                </div>
+                <div class="col col-md-4">
+                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        <a href="@Url.Action("ExportSPBetweenDates", "Home", new RouteValueDictionary() { { "FromDate", strFromDate },{"ToDate", strTodayDate } })" class="btn btn-primary mt-4">Export</a>
+                    }
+
+                    </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="card-body demo-vertical-spacing">
+
+    </div>
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="card">
+            <h6 class="card-header">
+                Store Procedures
+            </h6>
+            <div class="card-datatable table-responsive">
+                <table class="datatables-demo table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                            <th>Modified Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var spItem in Model)
+                        {
+                            <tr class="odd gradeX">
+                                <td>@spItem.SPName</td>
+                                <td>@spItem.Create_Date</td>
+                                <td>@spItem.Modify_Date</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+</div>
+

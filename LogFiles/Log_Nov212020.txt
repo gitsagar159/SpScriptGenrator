@@ -1,0 +1,18 @@
+#
+21-11-2020 23:24:07
+System.FormatException: String was not recognized as a valid DateTime.
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value, IFormatProvider provider)
+   at SpScriptGenrator.Controllers.HomeController.GetAllSP() in E:\Projects\SQLSchemaGenerator\SpScriptGenrator\Controllers\HomeController.cs:line 32
+#
+21-11-2020 23:24:44
+System.FormatException: String was not recognized as a valid DateTime.
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value, IFormatProvider provider)
+   at SpScriptGenrator.Controllers.HomeController.GetAllSP() in E:\Projects\SQLSchemaGenerator\SpScriptGenrator\Controllers\HomeController.cs:line 32
+#
+21-11-2020 23:28:25
+System.FormatException: String was not recognized as a valid DateTime.
+   at System.DateTimeParse.ParseExact(String s, String format, DateTimeFormatInfo dtfi, DateTimeStyles style)
+   at System.DateTime.ParseExact(String s, String format, IFormatProvider provider)
+   at SpScriptGenrator.Controllers.HomeController.GetAllSP() in E:\Projects\SQLSchemaGenerator\SpScriptGenrator\Controllers\HomeController.cs:line 32
